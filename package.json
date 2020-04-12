@@ -7,9 +7,10 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build",
+    "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "ORM_ENV=production nest start",
+    "start": "ORM_ENV=production node dist/main.js",
+    "postinstall": "npm run build",
     "start:dev": "ORM_ENV=development nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
