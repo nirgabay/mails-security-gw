@@ -17,7 +17,7 @@ module.exports = {
   'logging': process.env.ORM_ENV === 'production' ? ['error'] : true,
   'maxQueryExecutionTime': 1000, //log all queries which run more then 1 second
   'ssl': dbConfig.dialectOptions.ssl,
-  'entities': [process.env.ORM_ENV === 'production' ? 'dist/entity/**/*.js' : 'src/entity/**/*.ts'],
+  'entities': [process.env.ORM_ENV === 'production' ? 'dist/entity/*.js' : 'src/entity/*.ts'],
   'migrations': [process.env.ORM_ENV === 'production' ? 'dist/migration/**/*.js' : 'src/migration/**/*.ts'],
   'subscribers': [process.env.ORM_ENV === 'production' ? 'dist/subscriber/**/*.js' : 'src/subscriber/**/*.ts'],
   'cli':
