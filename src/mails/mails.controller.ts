@@ -7,7 +7,7 @@ export class MailsController {
   constructor(private readonly mailsService: MailsService) {}
 
   @Get()
-  async getAllMails(@Query() params): Promise<Mail[]> {
+  async getMails(@Query() params): Promise<Mail[]> {
     return await this.mailsService.getMails(params.offset, params.limit);
   }
 
