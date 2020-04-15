@@ -27,6 +27,7 @@ export class MailsService {
 
   async populateData(numberOfMails?: number): Promise<number> {
     await this.mailsRepository.clear();
+    await this.mailsRepository.query(`ALTER SEQUENCE "mails_id_seq" RESTART WITH 1`);
 
     const emails: Mail[] = [];
     const numberOfMailsToPopulate = numberOfMails || 2000;
@@ -39,6 +40,7 @@ export class MailsService {
       mail.sender = MailsService.generateRandomEmail();
       mail.subject = MailsService.generateRandomString();
       mail.category = this.categories[Math.floor(Math.random()*this.categories.length)];
+      mail.status = "OPEN";
       emails.push(mail);
     }
 
@@ -47,8 +49,17 @@ export class MailsService {
     return numberOfMailsToPopulate;
   }
 
-  async deleteMail(id: string): Promise<void> {
-    await this.mailsRepository.delete(id);
+  async deleteMails(mailIds: string[]): Promise<void> {
+    await this.mailsRepository.delete(mailIds);
+  }
+
+  async updateMailsStatus(mailIds: string[], status: string): Promise<void> {
+    await this.mailsRepository
+        .createQueryBuilder()
+        .update(Mail)
+        .set({ status })
+        .where('id  IN (:...mailIds)', { mailIds })
+        .execute();
   }
 
   private static generateRandomEmail(): string {

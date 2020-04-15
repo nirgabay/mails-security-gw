@@ -48,4 +48,11 @@ export class Mail {
     name: 'category'
   })
   category: string;
+
+  @Column('character varying', {
+    nullable: true,
+    length: 255,
+    name: 'status'
+  })
+  status: string;
 }
